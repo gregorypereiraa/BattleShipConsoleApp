@@ -2,7 +2,7 @@
 
 public class PlayerInfoModel
 {
-    public string userName { get; set; }
-    public List<GridSpotModel> shipLocation { get; set; }
-    public List<GridSpotModel> shotGrid { get; set; }
+    public string UserName { get; set; }
+    public List<GridSpotModel> ShipLocation { get; set; }
+    public List<GridSpotModel> DisplayGrid { get; set; }
 }
