@@ -24,6 +24,9 @@ do
 
 } while (Winner(activePlayer,passivePlayer)==null);
 
+winner = Winner(activePlayer, passivePlayer);
+MessageToWinner(winner);
+
 
  static void WelcomeMessage()
 {
@@ -129,5 +132,34 @@ static void DisplayShotGrid(PlayerInfoModel activePlayer)
 
 static void RecordPlayerShot(PlayerInfoModel activePlayer, PlayerInfoModel passivePlayer)
 {
-    
+    bool isValidShot = false;
+    string row = "";
+    int column = 0;
+    do
+    {
+        string shot = AskForShot();
+        ( row,column) = GameLogic.SplitShotIntoRowAndColumn(shot);
+        isValidShot = GameLogic.ValidateShot(row, column, activePlayer);
+
+        if (isValidShot == false)
+        {
+            Console.WriteLine("Invalid shot Location");
+        }
+    } while (isValidShot==false);
+
+    bool isAHit = GameLogic.IdentifyShotResult(row, column, passivePlayer);
+
+    GameLogic.MarkShotResult(row, column, activePlayer);
+}
+
+static string AskForShot()
+{
+    string output = AnsiConsole.Ask<string>("Please enter your shot: ");
+    return output;
+}
+
+static void MessageToWinner(PlayerInfoModel winner)
+{
+    Console.WriteLine($"Congratulation to {winner.UserName} for wining");
+    Console.WriteLine($"{winner.UserName} took {GameLogic.GetShotCount(winner)} shots.");
 }

@@ -47,4 +47,29 @@ public static class GameLogic
     {
         throw new NotImplementedException();
     }
+
+    public static int GetShotCount(PlayerInfoModel winner)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static (string row, int column) SplitShotIntoRowAndColumn(string shot)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static bool ValidateShot(string row, int column, PlayerInfoModel activePlayer)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static bool IdentifyShotResult(string row, int column, PlayerInfoModel passivePlayer)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static void MarkShotResult(string row, int column, PlayerInfoModel activePlayer)
+    {
+        throw new NotImplementedException();
+    }
 }
