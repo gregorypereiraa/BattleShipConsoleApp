@@ -2,7 +2,7 @@
 
 public static class GameLogic
 {
-    public static void InitializationGrid(PlayerInfoModel model)
+     public static void InitializationGrid(PlayerInfoModel model)
     {
         var letters = new List<string>
         {
@@ -26,9 +26,6 @@ public static class GameLogic
             }
         }
     }
-    
-    
-
     private static void AddGridSpot(PlayerInfoModel model, string letter, int number)
     {
         GridSpotModel spot = new GridSpotModel
@@ -37,8 +34,17 @@ public static class GameLogic
             spotNumber = number,
             status = GridSpotStatus.Empty
         };
-        model.DisplayGrid.Add(spot);
+        model.ShotGrid.Add(spot);
     }
-    
 
+
+    public static bool PlaceShip(PlayerInfoModel model, string location)
+    {
+        return true;
+    }
+
+    public static bool PlayerStillActive(PlayerInfoModel passivePlayer)
+    {
+        throw new NotImplementedException();
+    }
 }
