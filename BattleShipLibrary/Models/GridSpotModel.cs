@@ -2,8 +2,8 @@
 
 public class GridSpotModel
 {
-    public string spotLetter { get; set; }
-    public int spotNumber { get; set; }
-    public GridSpotStatus status { get; set; } = GridSpotStatus.Empty;
+    public string SpotLetter { get; set; }
+    public int SpotNumber { get; set; }
+    public GridSpotStatus Status { get; set; } = GridSpotStatus.Empty;
 
 }

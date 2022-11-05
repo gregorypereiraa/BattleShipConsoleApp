@@ -75,14 +75,14 @@ static PlayerInfoModel Winner(PlayerInfoModel player1, PlayerInfoModel player2)
     var countPlayer2 = 0;
     foreach (var shipPlayer1 in player1.ShipLocation)
     {
-        if (shipPlayer1.status == GridSpotStatus.Sunk)
+        if (shipPlayer1.Status == GridSpotStatus.Sunk)
         {
             countPlayer1 += 1;
         }
     }
 
     foreach (var shipPlayer2 in player2.ShipLocation)
-    { if (shipPlayer2.status == GridSpotStatus.Sunk)
+    { if (shipPlayer2.Status == GridSpotStatus.Sunk)
         {
             countPlayer2 += 1;
         }
@@ -103,23 +103,23 @@ static PlayerInfoModel Winner(PlayerInfoModel player1, PlayerInfoModel player2)
 
 static void DisplayShotGrid(PlayerInfoModel activePlayer)
 {
-    string currentRow = activePlayer.ShotGrid[0].spotLetter;
+    string currentRow = activePlayer.ShotGrid[0].SpotLetter;
     foreach (var gridSpot in activePlayer.ShotGrid)
     {
-        if (gridSpot.spotLetter != currentRow)
+        if (gridSpot.SpotLetter != currentRow)
         {
             Console.WriteLine("");
-            currentRow = gridSpot.spotLetter;
+            currentRow = gridSpot.SpotLetter;
         }
-        if (gridSpot.status == GridSpotStatus.Empty)
+        if (gridSpot.Status == GridSpotStatus.Empty)
         {
-            Console.Write($"{gridSpot.spotLetter }{gridSpot.spotNumber } ");
+            Console.Write($"{gridSpot.SpotLetter }{gridSpot.SpotNumber } ");
         }
-        else if (gridSpot.status == GridSpotStatus.Hit)
+        else if (gridSpot.Status == GridSpotStatus.Hit)
         {
             Console.Write(" X ");
         }
-        else if (gridSpot.status == GridSpotStatus.Miss)
+        else if (gridSpot.Status == GridSpotStatus.Miss)
         {
             Console.Write(" O ");
         }
