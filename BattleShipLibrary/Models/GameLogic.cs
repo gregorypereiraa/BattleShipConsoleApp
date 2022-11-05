@@ -97,9 +97,9 @@ public static class GameLogic
     {
         var row = "";
         var column = 0;
-        if (shot.Length != 2) throw new ArgumentException("This was an invalid shot type", shot);
+        if (shot.Length != 2) throw new ArgumentException("This was an invalid shot type", "shot");
         var shotArray = shot.ToCharArray();
-        row = shotArray[0].ToString();
+        row = shotArray[0].ToString().ToUpper();
         column = int.Parse(shotArray[1].ToString());
         return (row, column);
     }
@@ -125,7 +125,7 @@ public static class GameLogic
         return isAHit;
     }
 
-    public static void Sank(PlayerInfoModel Opponent, string row, int column)
+    public static void ShipSank(PlayerInfoModel Opponent, string row, int column)
     {
         foreach (var ship in Opponent.ShipLocation)
             if (ship.SpotLetter == row && ship.SpotNumber == column)
