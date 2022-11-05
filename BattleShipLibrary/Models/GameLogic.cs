@@ -38,7 +38,7 @@ public static class GameLogic
     public static bool PlaceShip(PlayerInfoModel player, string location)
     {
         var output = false;
-        (var row, var column) = SplitShotIntoRowAndColumn(location);
+        var (row, column) = SplitShotIntoRowAndColumn(location);
         var isValidLocation = ValidateGridLocation(player, row, column);
         var isShipAtLocation = ValidateShipPlacement(player, row, column);
         if (isValidLocation && isShipAtLocation)
@@ -109,10 +109,8 @@ public static class GameLogic
         var isValidShot = false;
         foreach (var gridSpot in player.ShotGrid)
             if (gridSpot.SpotLetter == row && gridSpot.SpotNumber == column)
-                if (gridSpot.Status==GridSpotStatus.Empty)
-                {
+                if (gridSpot.Status == GridSpotStatus.Empty)
                     isValidShot = true;
-                }
         return isValidShot;
     }
 
@@ -132,18 +130,13 @@ public static class GameLogic
                 ship.Status = GridSpotStatus.Sunk;
     }
 
-    public static void MarkShotResult(string row, int column, PlayerInfoModel player,bool isAHit)
+    public static void MarkShotResult(string row, int column, PlayerInfoModel player, bool isAHit)
     {
         foreach (var gridSpot in player.ShotGrid)
             if (gridSpot.SpotLetter == row && gridSpot.SpotNumber == column)
                 if (isAHit)
-                {
                     gridSpot.Status = GridSpotStatus.Hit;
-                }
                 else
-                {
                     gridSpot.Status = GridSpotStatus.Miss;
-                }
-        
     }
 }

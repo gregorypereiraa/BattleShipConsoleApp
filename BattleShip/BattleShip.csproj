@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BattleShipLibrary\BattleShipLibrary.csproj" />
+        <ProjectReference Include="..\BattleShipLibrary\BattleShipLibrary.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.30" />
+        <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.30"/>
     </ItemGroup>
 
 </Project>
