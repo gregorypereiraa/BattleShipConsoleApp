@@ -119,15 +119,9 @@ public static class GameLogic
         var isAHit = false;
         foreach (var ship in Opponent.ShipLocation)
             if (ship.SpotLetter == row && ship.SpotNumber == column)
-                isAHit = true;
-        return isAHit;
-    }
-
-    public static void ShipSank(PlayerInfoModel Opponent, string row, int column)
-    {
-        foreach (var ship in Opponent.ShipLocation)
-            if (ship.SpotLetter == row && ship.SpotNumber == column)
                 ship.Status = GridSpotStatus.Sunk;
+        isAHit = true;
+        return isAHit;
     }
 
     public static void MarkShotResult(string row, int column, PlayerInfoModel player, bool isAHit)
