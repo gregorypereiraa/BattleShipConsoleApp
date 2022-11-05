@@ -123,7 +123,6 @@ static void RecordPlayerShot(PlayerInfoModel activePlayer, PlayerInfoModel passi
     } while (isValidShot == false);
 
     var isAHit = GameLogic.IdentifyShotResult(row, column, passivePlayer);
-    GameLogic.ShipSank(passivePlayer, row, column);
     GameLogic.MarkShotResult(row, column, activePlayer, isAHit);
     InformationAfterTheShot(isAHit, activePlayer);
 }
