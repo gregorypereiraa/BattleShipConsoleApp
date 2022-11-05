@@ -79,7 +79,7 @@ public static class GameLogic
     {
         var isActive = false;
         foreach (var ship in passivePlayer.ShipLocation)
-            if (ship.Status == GridSpotStatus.Sunk)
+            if (ship.Status != GridSpotStatus.Sunk)
                 isActive = true;
         return isActive;
     }
@@ -104,18 +104,46 @@ public static class GameLogic
         return (row, column);
     }
 
-    public static bool ValidateShot(string row, int column, PlayerInfoModel activePlayer)
+    public static bool ValidateShot(string row, int column, PlayerInfoModel player)
     {
-        throw new NotImplementedException();
+        var isValidShot = false;
+        foreach (var gridSpot in player.ShotGrid)
+            if (gridSpot.SpotLetter == row && gridSpot.SpotNumber == column)
+                if (gridSpot.Status==GridSpotStatus.Empty)
+                {
+                    isValidShot = true;
+                }
+        return isValidShot;
     }
 
-    public static bool IdentifyShotResult(string row, int column, PlayerInfoModel passivePlayer)
+    public static bool IdentifyShotResult(string row, int column, PlayerInfoModel Opponent)
     {
-        throw new NotImplementedException();
+        var isAHit = false;
+        foreach (var ship in Opponent.ShipLocation)
+            if (ship.SpotLetter == row && ship.SpotNumber == column)
+                isAHit = true;
+        return isAHit;
     }
 
-    public static void MarkShotResult(string row, int column, PlayerInfoModel activePlayer)
+    public static void Sank(PlayerInfoModel Opponent, string row, int column)
     {
-        throw new NotImplementedException();
+        foreach (var ship in Opponent.ShipLocation)
+            if (ship.SpotLetter == row && ship.SpotNumber == column)
+                ship.Status = GridSpotStatus.Sunk;
+    }
+
+    public static void MarkShotResult(string row, int column, PlayerInfoModel player,bool isAHit)
+    {
+        foreach (var gridSpot in player.ShotGrid)
+            if (gridSpot.SpotLetter == row && gridSpot.SpotNumber == column)
+                if (isAHit)
+                {
+                    gridSpot.Status = GridSpotStatus.Hit;
+                }
+                else
+                {
+                    gridSpot.Status = GridSpotStatus.Miss;
+                }
+        
     }
 }

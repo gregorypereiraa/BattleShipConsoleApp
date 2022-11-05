@@ -1,30 +1,31 @@
-﻿using BattleShipLibrary.Models;
+﻿using System.Collections.Specialized;
+using BattleShipLibrary.Models;
 using Spectre.Console;
 
 
 
 WelcomeMessage();
 PlayerInfoModel activePlayer = CreatePlayer("Player 1");
-PlayerInfoModel passivePlayer = CreatePlayer("Player 2");
+Console.Clear();
+PlayerInfoModel Opponent = CreatePlayer("Player 2");
 PlayerInfoModel winner = null;
 
 do
 {
     DisplayShotGrid(activePlayer);
-    RecordPlayerShot(activePlayer, passivePlayer);
-    bool doesGameContinue = GameLogic.PlayerStillActive(passivePlayer);
+    RecordPlayerShot(activePlayer, Opponent);
+    bool doesGameContinue = GameLogic.PlayerStillActive(Opponent);
     if (doesGameContinue == true)
     {
-        (activePlayer, passivePlayer) = (passivePlayer, activePlayer);
+        (activePlayer, Opponent) = (Opponent, activePlayer);
     }
     else
     {
         winner = activePlayer;
     }
 
-} while (Winner(activePlayer,passivePlayer)==null);
+} while (winner==null);
 
-winner = Winner(activePlayer, passivePlayer);
 MessageToWinner(winner);
 
 
@@ -40,9 +41,12 @@ MessageToWinner(winner);
 static PlayerInfoModel CreatePlayer(string PlayerTitle)
 {
     PlayerInfoModel output = new PlayerInfoModel();
-    Console.WriteLine($"Player information for {PlayerTitle} :");
+    Console.WriteLine($"Player information for {PlayerTitle}");
     output.UserName = GetPlayerName();
     GameLogic.InitializationGrid(output);
+    Console.WriteLine("Find below the grid\n");
+    DisplayShotGrid(output);
+    LineReturn(2);
     PlaceShips(output);
     Console.Clear();
 
@@ -60,47 +64,14 @@ static void PlaceShips(PlayerInfoModel model)
     do
     {
         
-        string location = AnsiConsole.Ask<string>($"Out of 5 ships, where do you want to put your ship number{ model.ShipLocation.Count+1}:? ");
+        string location = AnsiConsole.Ask<string>($"Out of 5 ships, where do you want to put your ship number{ model.ShipLocation.Count+1}:?");
         bool isValidLocation = GameLogic.PlaceShip(model, location);
         if (isValidLocation==false)
         {Console.WriteLine("That is not a valid location, please try again");}
 
         ;
-    } while (model.ShipLocation.Count<5);
+    } while (model.ShipLocation.Count<2);
 }
-
-static PlayerInfoModel Winner(PlayerInfoModel player1, PlayerInfoModel player2)
-{
-    var countPlayer1 = 0;
-    var countPlayer2 = 0;
-    foreach (var shipPlayer1 in player1.ShipLocation)
-    {
-        if (shipPlayer1.Status == GridSpotStatus.Sunk)
-        {
-            countPlayer1 += 1;
-        }
-    }
-
-    foreach (var shipPlayer2 in player2.ShipLocation)
-    { if (shipPlayer2.Status == GridSpotStatus.Sunk)
-        {
-            countPlayer2 += 1;
-        }
-        
-    }
-
-    if (countPlayer1==5)
-    {
-        return player2;
-    }
-    else if (countPlayer2 == 5)
-    {
-        return player1;
-    }
-
-    return null;
-}
-
 static void DisplayShotGrid(PlayerInfoModel activePlayer)
 {
     string currentRow = activePlayer.ShotGrid[0].SpotLetter;
@@ -108,7 +79,7 @@ static void DisplayShotGrid(PlayerInfoModel activePlayer)
     {
         if (gridSpot.SpotLetter != currentRow)
         {
-            Console.WriteLine("");
+            LineReturn(1);
             currentRow = gridSpot.SpotLetter;
         }
         if (gridSpot.Status == GridSpotStatus.Empty)
@@ -137,7 +108,7 @@ static void RecordPlayerShot(PlayerInfoModel activePlayer, PlayerInfoModel passi
     int column = 0;
     do
     {
-        string shot = AskForShot();
+        string shot = AskForShot(activePlayer);
         ( row,column) = GameLogic.SplitShotIntoRowAndColumn(shot);
         isValidShot = GameLogic.ValidateShot(row, column, activePlayer);
 
@@ -148,13 +119,27 @@ static void RecordPlayerShot(PlayerInfoModel activePlayer, PlayerInfoModel passi
     } while (isValidShot==false);
 
     bool isAHit = GameLogic.IdentifyShotResult(row, column, passivePlayer);
+    GameLogic.Sank(passivePlayer,row,column);
+    GameLogic.MarkShotResult(row, column, activePlayer,isAHit);
+    Console.Clear();
+    DisplayShotGrid(activePlayer);
+    LineReturn(2);
+    if (isAHit)
+    {
+        Console.WriteLine("Congratulation that's a hit!");
+    }else Console.WriteLine("Unfortunately it's a miss ");
+    LineReturn(1);
 
-    GameLogic.MarkShotResult(row, column, activePlayer);
+    string next = AnsiConsole.Ask<string?>("Press enter to switch users.");
+    Console.Clear();
+    
+    
 }
 
-static string AskForShot()
+static string AskForShot(PlayerInfoModel player)
 {
-    string output = AnsiConsole.Ask<string>("Please enter your shot: ");
+    LineReturn(2);
+    string output = AnsiConsole.Ask<string>($"{player.UserName} please enter your shot on this grid: ");
     return output;
 }
 
@@ -162,4 +147,14 @@ static void MessageToWinner(PlayerInfoModel winner)
 {
     Console.WriteLine($"Congratulation to {winner.UserName} for wining");
     Console.WriteLine($"{winner.UserName} took {GameLogic.GetShotCount(winner)} shots.");
+}
+
+static void LineReturn(int number)
+{
+    int count = 0;
+    do
+    {
+        Console.WriteLine();
+        count += 1;
+    } while (number!=count);
 }
