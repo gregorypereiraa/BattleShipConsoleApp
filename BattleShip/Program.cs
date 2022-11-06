@@ -73,7 +73,7 @@ static void PlaceShips(PlayerInfoModel model)
         if (isValidLocation == false) Console.WriteLine("That is not a valid location, please try again");
 
         ;
-    } while (model.ShipLocation.Count < 2);
+    } while (model.ShipLocation.Count < 5);
 }
 
 static void DisplayShotGrid(PlayerInfoModel activePlayer)
