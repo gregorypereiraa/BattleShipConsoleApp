@@ -119,8 +119,10 @@ public static class GameLogic
         var isAHit = false;
         foreach (var ship in Opponent.ShipLocation)
             if (ship.SpotLetter == row && ship.SpotNumber == column)
+            {
                 ship.Status = GridSpotStatus.Sunk;
-        isAHit = true;
+                isAHit = true;
+            }
         return isAHit;
     }
 
