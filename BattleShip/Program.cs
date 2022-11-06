@@ -29,7 +29,7 @@ static void WelcomeMessage()
     Console.WriteLine("Welcome to the BattleShip App");
     Console.WriteLine("Created by Gregory");
     Console.WriteLine("*****************************");
-    Console.WriteLine();
+    LineReturn(2);
 }
 
 static PlayerInfoModel CreatePlayer(string PlayerTitle)
