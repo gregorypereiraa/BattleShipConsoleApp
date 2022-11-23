@@ -32,6 +32,28 @@ static void WelcomeMessage()
     LineReturn(2);
 }
 
+/*static (PlayerInfoModel,PlayerInfoModel) SetUpGame()
+{
+    int HowManyPlayers = 0;
+    PlayerInfoModel player1 = null;
+    PlayerInfoModel player2 = null;
+    do
+    {
+        HowManyPlayers = AnsiConsole.Ask<int>("Would you like to play against a computer or your friend ( 1 or 2 ): ");
+        if (HowManyPlayers == 1)
+        {
+            player1 = CreatePlayer("Player 1");
+            player2 = CreateComputerPlayer();
+        }
+        else if (HowManyPlayers == 2)
+        {
+            player1 = CreatePlayer("Player 1");
+            player2 = CreatePlayer("Player 2");
+        }
+    } while (HowManyPlayers != 1 || HowManyPlayers != 2);
+    return (player1, player2);
+}*/
+
 static PlayerInfoModel CreatePlayer(string PlayerTitle)
 {
     var output = new PlayerInfoModel();
@@ -147,7 +169,6 @@ static string AskForShot(PlayerInfoModel player)
     return output;
 }
 
-
 static void MessageToWinner(PlayerInfoModel winner)
 {
     Console.WriteLine($"Congratulation to {winner.UserName} for wining");
@@ -163,3 +184,12 @@ static void LineReturn(int number)
         count += 1;
     } while (number != count);
 }
+
+// static PlayerInfoModel CreateComputerPlayer()
+// {
+//     var output = new PlayerInfoModel();
+//     output.UserName = "Computer";
+//     GameLogic.InitializationGrid(output);
+//     GameLogic.ComputerShipsPlacement(output);
+//
+// }

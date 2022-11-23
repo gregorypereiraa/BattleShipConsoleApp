@@ -135,4 +135,27 @@ public static class GameLogic
                 else
                     gridSpot.Status = GridSpotStatus.Miss;
     }
+
+    /*public static void ComputerShipsPlacement(PlayerInfoModel output)
+    {
+        string chars = "ABCDE";
+        Random rd = new Random();
+        for (int i = 0; i < 5;)
+        {
+            string row = chars[rd.Next(5)].ToString();
+            int column = rd.Next(5);
+            if (ValidateShipPlacement(output,row,column))
+            {
+                output.ShipLocation.Add(new GridSpotModel(
+                {
+                    SpotLetter = row,
+                    SpotNumber = column,
+                    Status = GridSpotStatus.Ship
+                });
+                i++;
+
+            }
+            
+        }
+    }*/
 }
